@@ -10,12 +10,16 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<body>
-<div class = "container">
-<div class="jumbotron">
+<body style="background-color:white">
+<div class="jumbotron" style = "background-color:blue;">
+  <font color = "white">
+<center>
   <h1>PriCoSha</h1> 
   <p>Your private content sharing site.</p> 
+</center>  
+  </font>
 </div>
+<div class = "container">
 {% if not message %}
 	<a href="/login">Login</a>
 	<a href="/register">Register</a>

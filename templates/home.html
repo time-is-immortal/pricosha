@@ -7,22 +7,21 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body style="background-color:powderblue">
-<div class="jumbotron" style = "background-color:blue;">
-  <font color = "white">
-<center>
-  <h1>PriCoSha</h1> 
-  <p>Your private content sharing site.</p> 
-</center>  
-  </font>
-</div>
-<div class = "container">
-<form action="/post" method="POST">
+<body style="background-color:white">
+<!-- <form action="/post" method="POST">
 	<h1>Welcome {{username}}</h1> 
 	<input type="text" name = "blog" placeholder="post" required/> </br>
 	<input type="submit" value = Post />
-</form>
+</form> -->
+<div class="jumbotron" style = "background-color:blue;"> 
+<form action="/post" method="POST">
+  <font color = "white">
+<center>
+  <h1>Welcome {{username}},</h1> 
+  <p>Here's what your friend groups have been up to...</p> 
+</center>    </font>  </form> </div>
 
+<div class = "container"> 
 <style type="text/css">
 	table, th, td{
 		border: 1px solid black;
