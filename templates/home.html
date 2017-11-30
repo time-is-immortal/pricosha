@@ -17,7 +17,9 @@
 <form action="/post" method="POST">
   <font color = "white">
 <center>
-  <h1>Welcome {{username}},</h1> 
+	{% for line in fname %}
+  <h1>Welcome {{line.first_name}},</h1> 
+  {% endfor %}
   <p>Here's what your friend groups have been up to...</p> 
 </center>    </font>  </form> </div>
 
@@ -29,12 +31,10 @@
 </style>
 
 <table>
-	<th>Time</th>
 	<th>Content</th>
 
 {% for line in posts %}
 	<tr>
-		<td>{{line.timest}}</td>
 		<td>{{line.content_name}}</td>
 	</tr>
 {% endfor %}

@@ -87,11 +87,15 @@ def registerAuth():
 def home():
 	username = session['username']
 	cursor = conn.cursor();
-	query = 'SELECT content_name, DAY(timest) as ts FROM Content WHERE username = %s ORDER BY DAY(timest) DESC'
+	query = 'SELECT content_name FROM Content natural join Person WHERE username = %s ORDER BY DAY(timest) DESC'
+	query2 = 'SELECT first_name FROM Person WHERE username = %s'
 	cursor.execute(query, (username))
 	data = cursor.fetchall()
+	cursor.execute(query2, (username))
+	fname = cursor.fetchall()
+	print(data, "first_name is", fname)
 	cursor.close()
-	return render_template('home.html', username=username, posts=data)
+	return render_template('home.html', username=username, posts=data, fname = fname)
 
 		
 @app.route('/post', methods=['GET', 'POST'])
