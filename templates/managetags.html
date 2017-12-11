@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>PriCoSha</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color:white">
+<nav class="navbar navbar-fixed-top" style = "background-color:blue; color:blue;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
+      <a class="navbar-brand" href="/home"> <font color="white"> Pricosha </font> </a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/home"><font color="white"> Home</font></a></li>
+<!--         <li><a href="/friends"><font color="white"> Manage Friend Groups</font></a></li>
+ -->      </ul>
+      <ul class="nav navbar-nav"> 
+        <li><a href="/friends"><font color="white"> Manage Friend Groups</font></a></li>
+      </ul> 
+
+      <ul class="nav navbar-nav navbar-right">
+<!--         <li><a href="/register"><span class="glyphicon glyphicon-user"></span><font color="white">  Register</font></a></li> -->
+        <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> <font color="white"> Logout</font></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="jumbotron" style = "background-color:blue;">
+  <font color = "white"> 
+  	<center>
+  <h1>PriCoSha</h1> 
+  <p>Manage your tags</p> 
+</center> 
+  </font>
+</div>
+<p> 
+<div class = "container">
+  <h4><left>Tag a Friend: </left></h4>
+    <form action="/reqTag" method="POST"> 
+    <div class="form-group">
+      <label for="usr">Username:</label>
+          <input type="text" class="form-control" name = "tagthisusername">
+    </div>
+      <input type="hidden" name = "contentid" value= "{{id}}"/>
+      <input type="submit" class = "btn btn-primary btn-block" value = "Confirm Tag" /> 
+    </form>
+  {% if error %}
+<div class="alert alert-danger">
+  <strong> Error </strong> {{error}}
+</div>
+  {% endif %}
+  <h4><left>Your Unapproved Tags...</left></h4>
+{% for tag in unapproved %}
+  <center> 
+    {{tag.username_tagger}} asked to tag you in this post on {{tag.timest}}
+    <form action="/authTag" method="POST"> 
+    <div class="radio">
+      <label><input type="radio" name="approved" value="1">Approve this tag </label>
+    </div>
+    <div class="radio">
+      <label><input type="radio" name="approved" value="-1">Delete this tag request </label>
+    </div>
+    <div class="radio">
+      <label><input type="radio" name="approved" value="0">Don't do anything for now </label>
+    </div>
+      <input type="hidden" name = "contentid" value= "{{tag.id}}"/>
+      <input type="hidden" name = "tagger" value="{{tag.username_tagger}}"/>
+      <input type="submit" class = "btn btn-primary btn-block" value = Confirm /> 
+    </form> 
+  </center> 
+{% endfor %}
+
+    <h4><left>All Approved Tags...</left></h4>
+    {% for line in approved %}
+    <center> {{line.first_name}} {{line.last_name}} was tagged in this post</center> 
+    {% endfor %}
+
+
+
+<!-- <form action="/" method="POST">
+  <div class = "form-group"> 
+    <div class="form-group">
+      <label for="usr">Username:</label>
+      <input type="text" class="form-control" name = "username"id="username">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" name = "password" id="password">
+    </div>
+  </div> 
+  <input type="submit" class = "btn btn-primary btn-block btn-lg" value = Login />
+  	{% if error %}
+		<p class="error"><strong>Error:</strong> {{error}}</p>
+	{% endif %} 
+
+</form>
+-->
+</p>
+<a href="/home">Go to Home</a>
+</div>
+
+</body>
+
+
+</html>
