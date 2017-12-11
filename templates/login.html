@@ -17,13 +17,24 @@
   </font>
 </div>
 <div class = "container">
+
 <form action="/loginAuth" method="POST">
-	<input type="text" name = "username" placeholder="username" required/> </br>
-	<input type="password" name = "password" placeholder="password" required/></br>
-	<input type="submit" value = Login />
-	{% if error %}
-		<p class="error"><strong>Error:</strong> {{error}}</p>
-	{% endif %}
+  <div class = "form-group"> 
+    <div class="form-group">
+      <label for="usr">Username:</label>
+      <input type="text" class="form-control" name = "username"id="username">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" name = "password" id="password">
+    </div>
+  </div> 
+  <input type="submit" class = "btn btn-primary btn-block btn-lg" value = Login />
+  	{% if error %}
+<div class="alert alert-danger">
+  <strong> Error </strong> {{error}}
+</div> 	{% endif %}
+
 </form>
 
 <a href="/">Go back</a>
