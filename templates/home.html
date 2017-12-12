@@ -136,7 +136,13 @@
           <div class="container">
           <button type="button" class="btn btn-primary btn-block btn-lg" data-toggle="collapse" data-target="#{{line.id}}">See More Information</button>
           <div id="{{line.id}}" class="collapse"> 
-          <h3> This was posted by {{line.first_name}} {{line.last_name}}. </h3>
+            <p> </p>
+            <hr>
+          <form action="/comments" method="POST">
+            <input type="hidden" class="form-control" name = "contentname" id="cnm" value='{{line.content_name}}'/>
+            <input type="hidden" class="form-control" name = "contentid" id="content" value='{{line.id}}'/>
+            <input type="submit" class = "btn btn-primary btn-block btn-lg" value = "View and Manage Comments" />
+          </form> 
           <form action="/managetags" method="POST">
             <input type="hidden" class="form-control" name = "contentid" id="content" value={{line.id}}/>
             <input type="submit" class = "btn btn-primary btn-block btn-lg" value = "View and Manage Tags" />

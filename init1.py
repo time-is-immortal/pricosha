@@ -90,7 +90,7 @@ def registerAuth():
 def home():
 	username = session['username']
 	cursor = conn.cursor();
-	query = 'SELECT DISTINCT(id), username as poster, first_name, last_name, timest, file_path, content_name FROM Content NATURAL JOIN Person WHERE id in (SELECT id FROM Share WHERE group_name in (SELECT group_name FROM Member WHERE username = %s) AND username in (SELECT username_creator FROM Member WHERE username = %s)) OR public = True OR username = %s ORDER BY timest DESC' 
+	query = 'SELECT DISTINCT(id), username as poster, timest, file_path, content_name FROM Content NATURAL JOIN Person WHERE id in (SELECT id FROM Share WHERE group_name in (SELECT group_name FROM Member WHERE username = %s) AND username in (SELECT username_creator FROM Member WHERE username = %s)) OR public = True OR username = %s ORDER BY timest DESC' 
 	query2 = 'SELECT first_name FROM Person WHERE username = %s'
 	getgr = 'SELECT group_name FROM FriendGroup WHERE username = %s'
 	cursor.execute(query, (username, username, username))
@@ -237,23 +237,26 @@ def addfriend():
 	group = request.form['fgroup']
 	fname = request.form['fname']
 	lname = request.form['lname']
-	friend = request.form['usernm']
-	useUN = request.form['byun']
 
 	cursor = conn.cursor()
 
 	addfr = 'INSERT INTO Member VALUES(%s, %s, %s)'
-
 	check = 'SELECT COUNT(*) FROM Person WHERE first_name = %s AND last_name = %s'
 	dupcheck = 'SELECT COUNT(*) FROM Person NATURAL JOIN Member WHERE first_name = %s and last_name = %s and group_name=%s and username_creator = %s'
 	getusrnm = 'SELECT username FROM Person WHERE first_name=%s and last_name = %s'
 	getgr = "SELECT group_name FROM FriendGroup WHERE username = %s"
+
 	cursor.execute(getgr, (username))
 	groups = cursor.fetchall()
+
 	cursor.execute(check,(fname, lname))
 	collision = cursor.fetchone()
+
 	cursor.execute(dupcheck, (fname, lname, group, username))
 	dup = cursor.fetchone()
+
+	print 'dup', dup, '\ncollision', collision, '\ngroups', groups
+
 	error = None
 	if collision["COUNT(*)"] > 1: 
 		cursor.close()
@@ -275,6 +278,35 @@ def addfriend():
 		cursor.close()
 		msg = "Friend was successfully added to group: "
 		return render_template('test.html', error = error, fname = fname, lname = lname, msg = msg, fgroups = groups) 
+
+@app.route('/comments', methods = ['GET', 'POST'])
+def comments():
+	username = session['username']
+	cid = request.form['contentid']
+	cname = request.form['contentname']
+	getcom = 'SELECT username, comment_text, timest FROM Comment WHERE id = %s ORDER BY timest ASC'
+	cursor = conn.cursor()
+	cursor.execute(getcom, (cid))
+	lstcom = cursor.fetchall()
+	cursor.close()
+	return render_template('comments.html', lcom = lstcom, name = cname, id = cid)
+
+@app.route('/addcom', methods = ['GET', 'POST'])
+def addcomment(): 
+	username = session['username']
+	cid = request.form['contentid']
+	text = request.form['comment']
+	getname = 'SELECT content_name FROM Content WHERE id = %s'
+	ts = str(time.strftime('%Y-%m-%d %H:%M:%S'))
+	addcom = 'INSERT INTO Comment VALUES(%s, %s, %s, %s)'
+	cursor = conn.cursor()
+	cursor.execute(addcom,(cid, username, ts, text))
+	conn.commit()
+	cursor.execute(getname, (cid))
+	name = cursor.fetchone()
+	cursor.close() 
+	return redirect(url_for('home'))
+
 
 @app.route('/logout')
 def logout():

@@ -61,7 +61,9 @@
   <h4><left>Your Unapproved Tags...</left></h4>
 {% for tag in unapproved %}
   <center> 
-    {{tag.username_tagger}} asked to tag you in this post on {{tag.timest}}
+    <div class="alert alert-warning">
+  <strong>{{tag.username_tagger}} </strong> asked to tag you in this post on <strong>{{tag.timest}} </strong>
+ </div>
     <form action="/authTag" method="POST"> 
     <div class="radio">
       <label><input type="radio" name="approved" value="1">Approve this tag </label>
@@ -81,8 +83,11 @@
 
     <h4><left>All Approved Tags...</left></h4>
     {% for line in approved %}
-    <center> {{line.first_name}} {{line.last_name}} was tagged in this post</center> 
+<div class="alert alert-info" role="alert"> 
+<center> <strong> {{line.first_name}} {{line.last_name}} </strong> was tagged in this post.  </center>
+</div> 
     {% endfor %}
+
 
 
 

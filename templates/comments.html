@@ -24,7 +24,7 @@
 <!--         <li><a href="/friends"><font color="white"> Manage Friend Groups</font></a></li>
  -->      </ul>
       <ul class="nav navbar-nav"> 
-        <li><a href="/friends"><font color="white"> Manage Friend Groups</font></a></li>
+        <li><a href="/friends"><font color="white">Manage Friend Groups</font></a></li>
       </ul> 
 
       <ul class="nav navbar-nav navbar-right">
@@ -38,13 +38,35 @@
   <font color = "white"> 
     <center>
   <h1>PriCoSha</h1> 
-  <p>Manage your Friend Groups.</p> 
+  <p>Comments for <strong>" {{name}} "<strong> </p> 
 </center> 
   </font>
 </div>
 <div class = "container">
 
-  <h3> <center> Add a Person to Friend Group by Name</center> </h3> 
+{% for comment in lcom %}
+
+<div class="alert alert-info" role="alert">
+ <h4> <strong> {{comment.username}} </strong> </h4>
+  <hr> 
+  <h4> {{comment.comment_text}} </h4> {{comment.timest}}
+</div>
+{% endfor %}
+
+<hr>
+
+<form action="/addcom" method = "POST">
+    <div class="form-group">
+      <textarea class="form-control" rows="3" name ="comment"></textarea>
+    </div>
+    <input type="hidden" name = "contentid" value= "{{id}}"/>
+  <input type="submit" class = "btn btn-primary btn-block" value = "Comment" />
+</form> 
+
+
+
+
+<!--   <h3> <center> Add a Person to Friend Group by Name</center> </h3> 
 <form action="/addfriend" method = "POST">
   <div class="form-group">
   <label for="sel1">Select a FriendGroup:</label>
@@ -62,6 +84,7 @@
       <label for="ln">Last Name:</label>
       <input type="text" class="form-control" id="ln" name = "lname">
     </div>
+          <input type="hidden" name="byun" value ="False">
   <input type="submit" class = "btn btn-primary btn-block" value = "Add To Group" />
 </form> 
 
@@ -75,7 +98,7 @@
 <div class="alert alert-success">
   <strong>Success!  </strong> {{msg}}{{fname}}{{lname}}
 </div>  
-{% endif %}
+{% endif %} -->
 
 <a href="/home">Go back</a>
 </div>
