@@ -12,4 +12,5 @@ Templates files have been updated to reflect the structure of the PriCoSha webap
 
 Further changes will be made to add more features and functionality. 
 
-EDIT: Changes have been made to enable posting, tagging and friending.
+EDIT: Changes have been made to enable posting, tagging, friending, and 
+commenting. Note that the screenshots are now outdated. 
